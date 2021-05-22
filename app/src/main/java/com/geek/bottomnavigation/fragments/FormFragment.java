@@ -49,12 +49,11 @@ public class FormFragment extends Fragment {
             } else if (phoneNumber.equals("")) {
                 binding.etPhoneNumber.setError("Заполните номер");
             } else {
-                Fragment fragment = new HomeFragment();
                 Bundle bundle = new Bundle();
                 bundle.putString("name", name);
-                getActivity().getSupportFragmentManager().
-                        beginTransaction().replace(R.id.container_fr_add, fragment).commit();
-
+                bundle.putString("number", phoneNumber);
+                getActivity().getSupportFragmentManager().setFragmentResult("key", bundle);
+                getActivity().getSupportFragmentManager().popBackStack();
             }
         });
     }

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import androidx.fragment.app.FragmentResultListener;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
@@ -19,12 +20,13 @@ import java.util.ArrayList;
 public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
     private HomeFragmentAdapter adapter;
-    private ArrayList<Model> list = new ArrayList<>();
+    private Model model;
     private String name, phoneNumber;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        adapter = new HomeFragmentAdapter();
 
     }
 
@@ -37,23 +39,17 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        adapter = new HomeFragmentAdapter();
-        adapter.addItems(new Model("jopa","jopa"));
-        adapter.addItems(new Model("jopa","jopa"));
-        adapter.addItems(new Model("jopa","jopa"));
-        adapter.addItems(new Model("jopa","jopa"));
-        adapter.addItems(new Model("jopa","jopa"));
-        adapter.addItems(new Model("jopa","jopa"));
-        adapter.addItems(new Model("jopa","jopa"));
-        adapter.addItems(new Model("jopa","jopa"));
-        adapter.addItems(new Model("jopa","jopa"));
-        adapter.addItems(new Model("jopa","jopa"));
-        adapter.addItems(new Model("jopa","jopa"));
-        adapter.addItems(new Model("jopa","jopa"));
+        requireActivity().getSupportFragmentManager().setFragmentResultListener("key", this, new FragmentResultListener() {
+            @Override
+            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                model = new Model(result.getString("name"),result.getString("number"));
+                adapter.addItems(model);
+            }
+        });
         binding.recycler.setAdapter(adapter);
         binding.fab.setOnClickListener(v -> {
             FragmentTransaction fragmentTransaction = requireActivity().getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.cont,new FormFragment()).commit();
+            fragmentTransaction.addToBackStack(null).replace(R.id.cont,new FormFragment()).commit();
         });
     }
 
