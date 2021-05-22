@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
 
+import com.geek.bottomnavigation.MainActivity;
 import com.geek.bottomnavigation.R;
 import com.geek.bottomnavigation.databinding.FragmentDashBinding;
 import com.geek.bottomnavigation.databinding.FragmentFormBinding;
@@ -23,8 +24,7 @@ import java.util.ArrayList;
 public class FormFragment extends Fragment {
     private FragmentFormBinding binding;
     private HomeFragmentAdapter adapter;
-
-
+    private MainActivity mainActivity;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +34,7 @@ public class FormFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentFormBinding.inflate(inflater, container, false);
+        mainActivity = (MainActivity) requireActivity();
         return binding.getRoot();
     }
 
@@ -52,8 +53,10 @@ public class FormFragment extends Fragment {
                 Bundle bundle = new Bundle();
                 bundle.putString("name", name);
                 bundle.putString("number", phoneNumber);
+                mainActivity.visibleView();
                 getActivity().getSupportFragmentManager().setFragmentResult("key", bundle);
                 getActivity().getSupportFragmentManager().popBackStack();
+
             }
         });
     }

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.FrameMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -49,14 +50,17 @@ public class MainActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.home_fragment:
                         fn.beginTransaction().hide(active).hide(active).show(homeFragment).commit();
+                        binding.toolbarTitle.setText("Home");
                         active = homeFragment;
                         return true;
                     case R.id.dashboard_fragment:
                         fn.beginTransaction().hide(active).hide(active).show(dashFragment).commit();
+                        binding.toolbarTitle.setText("Das Board");
                         active = dashFragment;
                         return true;
                     case R.id.notification_fragment:
                         fn.beginTransaction().hide(active).hide(active).show(notificationFragment).commit();
+                        binding.toolbarTitle.setText("Notification");
                         active = notificationFragment;
                         return true;
                 }
@@ -75,5 +79,15 @@ public class MainActivity extends AppCompatActivity {
 
         }
         return super.onOptionsItemSelected(item);
+    }
+    public void hideView(){
+        binding.bottomNav.setVisibility(View.GONE);
+        binding.toolbar.setVisibility(View.GONE);
+    }
+
+    public void visibleView(){
+        binding.toolbar.setVisibility(View.VISIBLE);
+        binding.bottomNav.setVisibility(View.VISIBLE);
+
     }
 }

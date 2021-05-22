@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.geek.bottomnavigation.MainActivity;
 import com.geek.bottomnavigation.R;
 import com.geek.bottomnavigation.databinding.FragmentHomeBinding;
 
@@ -22,6 +23,7 @@ public class HomeFragment extends Fragment {
     private HomeFragmentAdapter adapter;
     private Model model;
     private String name, phoneNumber;
+    private MainActivity mainActivity;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -32,6 +34,7 @@ public class HomeFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        mainActivity = (MainActivity) requireActivity();
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
@@ -42,15 +45,15 @@ public class HomeFragment extends Fragment {
         requireActivity().getSupportFragmentManager().setFragmentResultListener("key", this, new FragmentResultListener() {
             @Override
             public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-                model = new Model(result.getString("name"),result.getString("number"));
+                model = new Model(result.getString("name"), result.getString("number"));
                 adapter.addItems(model);
             }
         });
         binding.recycler.setAdapter(adapter);
         binding.fab.setOnClickListener(v -> {
+            mainActivity.hideView();
             FragmentTransaction fragmentTransaction = requireActivity().getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.addToBackStack(null).replace(R.id.cont,new FormFragment()).commit();
+            fragmentTransaction.addToBackStack(null).replace(R.id.cont, new FormFragment()).commit();
         });
     }
-
 }
