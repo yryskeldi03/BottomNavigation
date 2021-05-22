@@ -11,10 +11,25 @@ import java.util.ArrayList;
 
 public class HomeFragmentAdapter extends RecyclerView.Adapter<HomeFragmentAdapter.ViewHolder>  {
     private ArrayList<Model> list = new ArrayList<>();
+    private OnRecyclerItemClick listener;
 
-    public void addItems(Model model){
-        list.add(0,model);
+    public HomeFragmentAdapter() {
+
+    }
+
+    public void addItems(Model models){
+        this.list.add(0,models);
         notifyDataSetChanged();
+    }
+
+    public void changeItems(Model model, int pos){
+        list.remove(pos);
+        list.add(pos,model);
+        notifyItemChanged(pos);
+    }
+
+    public void setListener(OnRecyclerItemClick listener) {
+        this.listener = listener;
     }
 
     @Override
@@ -25,6 +40,7 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter<HomeFragmentAdapte
     @Override
     public void onBindViewHolder(HomeFragmentAdapter.ViewHolder holder, int position) {
         holder.onBind(list.get(position));
+        holder.itemView.setOnClickListener(v -> listener.onItemClick(list.get(position), position));
     }
 
     @Override

@@ -16,18 +16,22 @@ import com.geek.bottomnavigation.MainActivity;
 import com.geek.bottomnavigation.R;
 import com.geek.bottomnavigation.databinding.FragmentHomeBinding;
 
-public class HomeFragment extends Fragment {
+import java.util.ArrayList;
+
+public class HomeFragment extends Fragment implements OnRecyclerItemClick {
     private FragmentHomeBinding binding;
     private HomeFragmentAdapter adapter;
     private Model model;
-    private String name, phoneNumber;
     private MainActivity mainActivity;
+    private FormFragment formFragment;
+    private boolean isEdited = false;
+    private int pos;
+    private ArrayList<Model> list = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         adapter = new HomeFragmentAdapter();
-
     }
 
     @Override
@@ -44,14 +48,33 @@ public class HomeFragment extends Fragment {
             @Override
             public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
                 model = new Model(result.getString("name"), result.getString("number"));
-                adapter.addItems(model);
+                if (isEdited){
+                    adapter.changeItems(model,pos);
+                }else{
+                    adapter.addItems(model);
+                }
             }
         });
+        adapter.setListener(this);
         binding.recycler.setAdapter(adapter);
         binding.fab.setOnClickListener(v -> {
+            isEdited = false;
             mainActivity.hideBottomNav();
             FragmentTransaction fragmentTransaction = requireActivity().getSupportFragmentManager().beginTransaction();
             fragmentTransaction.addToBackStack(null).replace(R.id.cont, new FormFragment()).commit();
         });
+    }
+
+    @Override
+    public void onItemClick(Model model, int pos) {
+        this.pos = pos;
+        isEdited = true;
+        Bundle bundle = new Bundle();
+        formFragment = new FormFragment();
+        formFragment.setArguments(bundle);
+        bundle.putSerializable("model",model);
+        mainActivity.hideBottomNav();
+        FragmentTransaction fragmentTransaction = requireActivity().getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.addToBackStack(null).replace(R.id.cont,formFragment).commit();
     }
 }

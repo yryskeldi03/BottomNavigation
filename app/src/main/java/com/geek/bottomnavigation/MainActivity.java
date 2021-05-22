@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     case R.id.dashboard_fragment:
                         fn.beginTransaction().hide(active).hide(active).show(dashFragment).commit();
-                        binding.toolbarTitle.setText("Das Board");
+                        binding.toolbarTitle.setText("Dash Board");
                         active = dashFragment;
                         return true;
                     case R.id.notification_fragment:

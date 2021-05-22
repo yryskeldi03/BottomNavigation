@@ -1,6 +1,8 @@
 package com.geek.bottomnavigation.fragments;
 
-public class Model {
+import java.io.Serializable;
+
+public class Model implements Serializable {
     private String name;
     private String phoneNumber;
 
