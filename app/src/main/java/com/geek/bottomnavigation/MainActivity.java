@@ -80,13 +80,11 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-    public void hideView(){
+    public void hideBottomNav(){
         binding.bottomNav.setVisibility(View.GONE);
-        binding.toolbar.setVisibility(View.GONE);
     }
 
-    public void visibleView(){
-        binding.toolbar.setVisibility(View.VISIBLE);
+    public void visibleBottomNav(){
         binding.bottomNav.setVisibility(View.VISIBLE);
 
     }

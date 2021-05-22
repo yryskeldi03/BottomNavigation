@@ -1,25 +1,15 @@
 package com.geek.bottomnavigation.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 
 import com.geek.bottomnavigation.MainActivity;
-import com.geek.bottomnavigation.R;
-import com.geek.bottomnavigation.databinding.FragmentDashBinding;
 import com.geek.bottomnavigation.databinding.FragmentFormBinding;
-
-import java.util.ArrayList;
 
 public class FormFragment extends Fragment {
     private FragmentFormBinding binding;
@@ -53,7 +43,7 @@ public class FormFragment extends Fragment {
                 Bundle bundle = new Bundle();
                 bundle.putString("name", name);
                 bundle.putString("number", phoneNumber);
-                mainActivity.visibleView();
+                mainActivity.visibleBottomNav();
                 getActivity().getSupportFragmentManager().setFragmentResult("key", bundle);
                 getActivity().getSupportFragmentManager().popBackStack();
 

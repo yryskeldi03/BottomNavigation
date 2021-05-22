@@ -16,8 +16,6 @@ import com.geek.bottomnavigation.MainActivity;
 import com.geek.bottomnavigation.R;
 import com.geek.bottomnavigation.databinding.FragmentHomeBinding;
 
-import java.util.ArrayList;
-
 public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
     private HomeFragmentAdapter adapter;
@@ -51,7 +49,7 @@ public class HomeFragment extends Fragment {
         });
         binding.recycler.setAdapter(adapter);
         binding.fab.setOnClickListener(v -> {
-            mainActivity.hideView();
+            mainActivity.hideBottomNav();
             FragmentTransaction fragmentTransaction = requireActivity().getSupportFragmentManager().beginTransaction();
             fragmentTransaction.addToBackStack(null).replace(R.id.cont, new FormFragment()).commit();
         });
